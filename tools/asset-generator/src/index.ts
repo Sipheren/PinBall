@@ -1,6 +1,7 @@
 // tools/asset-generator/src/index.ts
 import { Command } from 'commander';
 import { BatchAssetGenerator } from './generators/batch.js';
+import { FullBatchGenerator } from './generators/full-batch.js';
 import { GeminiAssetGenerator } from './gemini-client.js';
 import { PROMPT_TEMPLATES, THEME_PRESETS } from './prompts/templates.js';
 import * as dotenv from 'dotenv';
@@ -106,6 +107,39 @@ program
     console.log(
       '  • gemini-3-pro-image-preview - Nano Banana Pro (high quality)\n'
     );
+  });
+
+program
+  .command('generate-all')
+  .description('Generate all assets from asset-prompts.md')
+  .option('-o, --output <dir>', 'Output directory', '../output/assets')
+  .option('-p, --priority <level>', 'Filter by priority (critical|high|medium|low)')
+  .option('-c, --category <name>', 'Filter by category')
+  .option('-b, --batch-size <size>', 'Batch size for parallel generation', '5')
+  .option('-d, --delay <ms>', 'Delay between batches in ms', '2000')
+  .action(async (options) => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error('❌ Error: GEMINI_API_KEY not set in environment');
+      console.log('\nCreate a .env file with:');
+      console.log('  GEMINI_API_KEY=your_api_key_here\n');
+      process.exit(1);
+    }
+
+    const generator = new FullBatchGenerator(apiKey, options.output);
+    await generator.generateAll({
+      priority: options.priority,
+      category: options.category,
+      batchSize: parseInt(options.batchSize),
+      delay: parseInt(options.delay),
+    });
+  });
+
+program
+  .command('count-assets')
+  .description('Count total assets in library')
+  .action(async () => {
+    await FullBatchGenerator.printAssetCount();
   });
 
 program.parse();

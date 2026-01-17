@@ -8,6 +8,10 @@
     "single": "tsx src/index.ts single",
     "themes": "tsx src/index.ts list-themes",
     "models": "tsx src/index.ts list-models",
+    "generate-all": "tsx src/index.ts generate-all",
+    "generate-critical": "tsx src/index.ts generate-all --priority critical",
+    "generate-high": "tsx src/index.ts generate-all --priority high",
+    "count": "tsx src/index.ts count-assets",
     "build": "tsc"
   },
   "dependencies": {

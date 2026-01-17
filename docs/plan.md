@@ -14,42 +14,7 @@
 | Linting | ESLint + Prettier |
 | Testing | Vitest for unit tests |
 
-### 1.2 Asset Generation System
-
-Automated texture and graphic generation using Google Gemini API (Imagen 3).
-
-| Component | Details |
-|-----------|---------|
-| API | Google Gemini Imagen 3 |
-| Model | `imagen-3.0-generate-001` |
-| Script | `scripts/assets/generate-assets.ts` |
-| Manifest | `scripts/assets/asset-manifest.json` |
-| Cost | ~$5-10 USD for full asset set |
-
-**Features:**
-- Generate tables, entities, UI, and effects assets
-- JSON-based manifest with detailed prompts
-- Automatic retry and rate limiting
-- Skip existing files (incremental generation)
-- Pattern-based selective generation
-
-**Setup:**
-```bash
-# Install dependencies
-pnpm install
-
-# Set API key
-cp .env.example .env
-# Edit .env: GEMINI_API_KEY=your_key
-
-# Generate all assets
-pnpm assets:generate
-
-# Generate specific category
-pnpm assets:generate ball
-```
-
-### 1.3 Directory Structure
+### 1.2 Directory Structure
 
 ```
 pinball/
@@ -542,7 +507,7 @@ const config = {
 
 | Week | Phase | Deliverable |
 |------|-------|-------------|
-| 1-2 | Foundation | Project setup, asset generation system, build pipeline |
+| 1-2 | Foundation | Project setup, build pipeline, basic game loop |
 | 3-4 | Core Physics | Ball, flippers, walls, collision system |
 | 5-6 | Entities | Bumpers, targets, ramps, gates |
 | 7-8 | First Table | Complete playable table with placeholder art |
@@ -558,10 +523,9 @@ const config = {
 ## Immediate Next Steps
 
 1. **Initialize project** — Set up Vite + TypeScript + PixiJS + Matter.js
-2. **Set up asset generation** — Configure Gemini API, generate initial textures
-3. **Prototype physics** — Ball + flippers + basic walls
-4. **Input handling** — Keyboard controls for flippers
-5. **First playable** — Minimal table with scoring
+2. **Prototype physics** — Ball + flippers + basic walls
+3. **Input handling** — Keyboard controls for flippers
+4. **First playable** — Minimal table with scoring
 
 ---
 
